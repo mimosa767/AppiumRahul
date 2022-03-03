@@ -1,5 +1,6 @@
 package package1;
 
+import com.sun.tools.corba.se.idl.constExpr.And;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -13,9 +14,9 @@ import java.util.concurrent.TimeUnit;
 
 public class PerfectoLocalDriverMethod {
 
-    public static RemoteWebDriver capabilities() throws MalformedURLException, InterruptedException {
+    public static AndroidDriver<AndroidElement> capabilities() throws MalformedURLException, InterruptedException {
 
-        RemoteWebDriver driver;
+        AndroidDriver<AndroidElement> driver;
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("platformVersion", "10");
@@ -23,14 +24,14 @@ public class PerfectoLocalDriverMethod {
         capabilities.setCapability("model", "Galaxy.*");
         capabilities.setCapability("enableAppiumBehavior", true);
         capabilities.setCapability("app", "PUBLIC:/ApiDemos-debug.apk");
-        capabilities.setCapability("securityToken", "eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4YmI4YmZmZS1kMzBjLTQ2MjctYmMxMS0zNTYyMmY1ZDkyMGYifQ.eyJpYXQiOjE2MzM2MDc5MDYsImp0aSI6IjFhOGMwM2RmLTUyMGUtNGIwYi05NjQxLTRmMTdkOWY0YzczYiIsImlzcyI6Imh0dHBzOi8vYXV0aC5wZXJmZWN0b21vYmlsZS5jb20vYXV0aC9yZWFsbXMvZGVtby1wZXJmZWN0b21vYmlsZS1jb20iLCJhdWQiOiJodHRwczovL2F1dGgucGVyZmVjdG9tb2JpbGUuY29tL2F1dGgvcmVhbG1zL2RlbW8tcGVyZmVjdG9tb2JpbGUtY29tIiwic3ViIjoiZDQyMTczM2MtOTFjOC00YzIxLTgxZmItZmM3OWFlNzRjZmQwIiwidHlwIjoiT2ZmbGluZSIsImF6cCI6Im9mZmxpbmUtdG9rZW4tZ2VuZXJhdG9yIiwibm9uY2UiOiJkY2ZhMDc5Ni05ZWJhLTQxYmYtOThhNi1hODJkMGNlMjAzZWMiLCJzZXNzaW9uX3N0YXRlIjoiYThmNDI0YzktYTM4OC00MmU3LWE3OWUtY2JmNDI1MWRjOWU5Iiwic2NvcGUiOiJvcGVuaWQgb2ZmbGluZV9hY2Nlc3MifQ.azZ-UFTSrrNEVeVUbB7yHjBwd43gJfk3j9zDVAoZ3tI");
+        capabilities.setCapability("securityToken", "eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4YmI4YmZmZS1kMzBjLTQ2MjctYmMxMS0zNTYyMmY1ZDkyMGYifQ.eyJpYXQiOjE2NDU4MDI1OTMsImp0aSI6ImU1NTJiZWVlLTY3OTItNDc3Mi1hNzNjLTRlMjNhMGY4ZDgwNSIsImlzcyI6Imh0dHBzOi8vYXV0aC5wZXJmZWN0b21vYmlsZS5jb20vYXV0aC9yZWFsbXMvZGVtby1wZXJmZWN0b21vYmlsZS1jb20iLCJhdWQiOiJodHRwczovL2F1dGgucGVyZmVjdG9tb2JpbGUuY29tL2F1dGgvcmVhbG1zL2RlbW8tcGVyZmVjdG9tb2JpbGUtY29tIiwic3ViIjoiZDQyMTczM2MtOTFjOC00YzIxLTgxZmItZmM3OWFlNzRjZmQwIiwidHlwIjoiT2ZmbGluZSIsImF6cCI6Im9mZmxpbmUtdG9rZW4tZ2VuZXJhdG9yIiwibm9uY2UiOiIzNGM0MzljNC0xOGMxLTRhZDktYmFjZS0yZDdiMjlkNTUxYjUiLCJzZXNzaW9uX3N0YXRlIjoiMzc3NzY1M2QtYzhiNy00MWY3LWFmMWQtNzA3YTVkNzc3MGM2Iiwic2NvcGUiOiJvcGVuaWQgb2ZmbGluZV9hY2Nlc3MifQ.pwkicVBa05D-vizMWs3dCp3bCM8p9VNTvDQUDQCa6tY");
 
 
-        driver = new RemoteWebDriver(new URL("https://demo.perfectomobile.com/nexperience/perfectomobile/wd/hub/"), capabilities);
+        driver = new AndroidDriver<>(new URL("https://demo.perfectomobile.com/nexperience/perfectomobile/wd/hub/"), capabilities);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        Thread.sleep(7000);
+        Thread.sleep(2000);
         driver.findElementByXPath("//android.widget.TextView[@text='Preference']").click();
-        Thread.sleep(7000);
+        Thread.sleep(2000);
         return driver;
 
     }

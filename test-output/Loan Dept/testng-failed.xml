@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="10" name="Failed suite [Loan Dept]" parallel="tests">
+  <parameter name="APIKey/username" value="123456"/>
+  <parameter name="URL" value="carloan.com"/>
+  <listeners>
+    <listener class-name="TestNGProject.Listeners"/>
+  </listeners>
+  <test name="Personal Loan(failed)" parallel="tests">
+    <parameter name="APIKey/username" value="123456"/>
+    <parameter name="URL" value="personalloan.com"/>
+    <classes>
+      <class name="TestNGProject.day1">
+        <methods>
+          <include name="Demo" invocation-numbers="0"/>
+        </methods>
+      </class> <!-- TestNGProject.day1 -->
+      <class name="TestNGProject.day3">
+        <methods>
+          <include name="BFSuite"/>
+          <include name="BeforeMobileLoginLoan"/>
+          <include name="AFSuite"/>
+          <include name="AfterMobileLoginLoan"/>
+          <include name="AfterTest"/>
+          <include name="BeforeTest"/>
+          <include name="BeforeLoginLoan"/>
+          <include name="AfterLoginLoan"/>
+        </methods>
+      </class> <!-- TestNGProject.day3 -->
+    </classes>
+  </test> <!-- Personal Loan(failed) -->
+</suite> <!-- Failed suite [Loan Dept] -->
