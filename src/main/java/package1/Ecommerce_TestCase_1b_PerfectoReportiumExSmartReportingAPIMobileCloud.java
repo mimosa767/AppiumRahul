@@ -1,6 +1,5 @@
 package package1;
 
-import com.google.common.graph.Network;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -14,8 +13,6 @@ import com.perfecto.reportium.test.result.TestResultFactory;
 import com.perfecto.utilities.device.DeviceLogs;
 import com.perfecto.utilities.device.DeviceVitals;
 import com.perfecto.utilities.device.Location;
-import com.perfectomobile.selenium.options.rotate.MobileDeviceRotateOperation;
-import com.perfectomobile.selenium.options.rotate.MobileDeviceRotateOptionsUtils;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -31,8 +28,6 @@ import org.testng.Assert;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
@@ -41,24 +36,24 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-public class Ecommerce_TestCase_1b_PerfectoReportiumExSmartReportingAPI extends LocalPerfectoDriverMethodEcommerce {
+public class Ecommerce_TestCase_1b_PerfectoReportiumExSmartReportingAPIMobileCloud extends LocalPerfectoDriverMethodEcommerceMobileCloud {
     //setCustomConditions(driver);
     //Network Virtualization; startNetworkVirtualization(driver, "1");
     // enableAirplaneMode(driver);
     //  disableWifi(driver);
     public static void main (String [] args) throws IOException, InterruptedException, URISyntaxException {
 
-        final String PERFECTO_SECURITY_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4YmI4YmZmZS1kMzBjLTQ2MjctYmMxMS0zNTYyMmY1ZDkyMGYifQ.eyJpYXQiOjE2NDU4MDI1OTMsImp0aSI6ImU1NTJiZWVlLTY3OTItNDc3Mi1hNzNjLTRlMjNhMGY4ZDgwNSIsImlzcyI6Imh0dHBzOi8vYXV0aC5wZXJmZWN0b21vYmlsZS5jb20vYXV0aC9yZWFsbXMvZGVtby1wZXJmZWN0b21vYmlsZS1jb20iLCJhdWQiOiJodHRwczovL2F1dGgucGVyZmVjdG9tb2JpbGUuY29tL2F1dGgvcmVhbG1zL2RlbW8tcGVyZmVjdG9tb2JpbGUtY29tIiwic3ViIjoiZDQyMTczM2MtOTFjOC00YzIxLTgxZmItZmM3OWFlNzRjZmQwIiwidHlwIjoiT2ZmbGluZSIsImF6cCI6Im9mZmxpbmUtdG9rZW4tZ2VuZXJhdG9yIiwibm9uY2UiOiIzNGM0MzljNC0xOGMxLTRhZDktYmFjZS0yZDdiMjlkNTUxYjUiLCJzZXNzaW9uX3N0YXRlIjoiMzc3NzY1M2QtYzhiNy00MWY3LWFmMWQtNzA3YTVkNzc3MGM2Iiwic2NvcGUiOiJvcGVuaWQgb2ZmbGluZV9hY2Nlc3MifQ.pwkicVBa05D-vizMWs3dCp3bCM8p9VNTvDQUDQCa6tY"; // TODO put your security token here
+        final String PERFECTO_SECURITY_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI5MjIzOWFkNi1iNzQ5LTQ3MWMtOGM4ZS0wYWRkYTVkODZmNjMifQ.eyJpYXQiOjE2NDE0OTUxMDEsImp0aSI6ImQ4ZTQ1ODM4LWJjODgtNDMzZS1hNzhmLTIxMzUyYzZjMGY1OSIsImlzcyI6Imh0dHBzOi8vYXV0aC5wZXJmZWN0b21vYmlsZS5jb20vYXV0aC9yZWFsbXMvbW9iaWxlY2xvdWQtcGVyZmVjdG9tb2JpbGUtY29tIiwiYXVkIjoiaHR0cHM6Ly9hdXRoLnBlcmZlY3RvbW9iaWxlLmNvbS9hdXRoL3JlYWxtcy9tb2JpbGVjbG91ZC1wZXJmZWN0b21vYmlsZS1jb20iLCJzdWIiOiI3ZmViY2UxNi0zZjFjLTQ1YWMtODU4YS0yN2Y2NWRkNWZhM2MiLCJ0eXAiOiJPZmZsaW5lIiwiYXpwIjoib2ZmbGluZS10b2tlbi1nZW5lcmF0b3IiLCJub25jZSI6IjU5MjQ4ZDljLWVlNzYtNDExMC04YmMwLTg5Njk1OWNjODRjOSIsInNlc3Npb25fc3RhdGUiOiI1ZTk2ZmVlZC05YTkzLTRkZDUtODg1OS1kYzI1MDQyNTFjMDYiLCJzY29wZSI6Im9wZW5pZCBvZmZsaW5lX2FjY2VzcyJ9.6emx-BtYpNxSb8FFPIHTl98PDvO8zK4bxp8dNsH_2aI"; // TODO put your security token here
         final String SECURITY_TOKEN = System.getProperty("security-token", PERFECTO_SECURITY_TOKEN);
 
         // The Perfecto Continuous Quality Lab you work with
-        final String CQL_NAME = System.getProperty("CQL_NAME", "demo"); // TODO put your Continuous Quality Lab name here
+        final String CQL_NAME = System.getProperty("CQL_NAME", "mobilecloud"); // TODO put your Continuous Quality Lab name here
         final String REPORTING_SERVER_URL = "https://" + CQL_NAME + ".reporting-01.perfectomobile.com";
         final String CQL_SERVER_URL = "https://" + CQL_NAME + ".perfectomobile.com";
-        final String OFFLINE_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4YmI4YmZmZS1kMzBjLTQ2MjctYmMxMS0zNTYyMmY1ZDkyMGYifQ.eyJpYXQiOjE2NDU4MDI1OTMsImp0aSI6ImU1NTJiZWVlLTY3OTItNDc3Mi1hNzNjLTRlMjNhMGY4ZDgwNSIsImlzcyI6Imh0dHBzOi8vYXV0aC5wZXJmZWN0b21vYmlsZS5jb20vYXV0aC9yZWFsbXMvZGVtby1wZXJmZWN0b21vYmlsZS1jb20iLCJhdWQiOiJodHRwczovL2F1dGgucGVyZmVjdG9tb2JpbGUuY29tL2F1dGgvcmVhbG1zL2RlbW8tcGVyZmVjdG9tb2JpbGUtY29tIiwic3ViIjoiZDQyMTczM2MtOTFjOC00YzIxLTgxZmItZmM3OWFlNzRjZmQwIiwidHlwIjoiT2ZmbGluZSIsImF6cCI6Im9mZmxpbmUtdG9rZW4tZ2VuZXJhdG9yIiwibm9uY2UiOiIzNGM0MzljNC0xOGMxLTRhZDktYmFjZS0yZDdiMjlkNTUxYjUiLCJzZXNzaW9uX3N0YXRlIjoiMzc3NzY1M2QtYzhiNy00MWY3LWFmMWQtNzA3YTVkNzc3MGM2Iiwic2NvcGUiOiJvcGVuaWQgb2ZmbGluZV9hY2Nlc3MifQ.pwkicVBa05D-vizMWs3dCp3bCM8p9VNTvDQUDQCa6tY";
+        final String OFFLINE_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI5MjIzOWFkNi1iNzQ5LTQ3MWMtOGM4ZS0wYWRkYTVkODZmNjMifQ.eyJpYXQiOjE2NDE0OTUxMDEsImp0aSI6ImQ4ZTQ1ODM4LWJjODgtNDMzZS1hNzhmLTIxMzUyYzZjMGY1OSIsImlzcyI6Imh0dHBzOi8vYXV0aC5wZXJmZWN0b21vYmlsZS5jb20vYXV0aC9yZWFsbXMvbW9iaWxlY2xvdWQtcGVyZmVjdG9tb2JpbGUtY29tIiwiYXVkIjoiaHR0cHM6Ly9hdXRoLnBlcmZlY3RvbW9iaWxlLmNvbS9hdXRoL3JlYWxtcy9tb2JpbGVjbG91ZC1wZXJmZWN0b21vYmlsZS1jb20iLCJzdWIiOiI3ZmViY2UxNi0zZjFjLTQ1YWMtODU4YS0yN2Y2NWRkNWZhM2MiLCJ0eXAiOiJPZmZsaW5lIiwiYXpwIjoib2ZmbGluZS10b2tlbi1nZW5lcmF0b3IiLCJub25jZSI6IjU5MjQ4ZDljLWVlNzYtNDExMC04YmMwLTg5Njk1OWNjODRjOSIsInNlc3Npb25fc3RhdGUiOiI1ZTk2ZmVlZC05YTkzLTRkZDUtODg1OS1kYzI1MDQyNTFjMDYiLCJzY29wZSI6Im9wZW5pZCBvZmZsaW5lX2FjY2VzcyJ9.6emx-BtYpNxSb8FFPIHTl98PDvO8zK4bxp8dNsH_2aI";
         String network = "4g_lte_advanced_average";
-        AndroidDriver<AndroidElement> driver = LocalPerfectoDriverMethodEcommerce.capabilities();
-        Thread.sleep(500);
+        AndroidDriver<AndroidElement> driver = LocalPerfectoDriverMethodEcommerceMobileCloud.capabilities();
+        Thread.sleep(1000);
         //create a PerfectoExecutionContext instance
         //The execution context defines metadata for the Execution report. The metadata includes "tags" that can be used to select the exection
         //report from the list of reports
@@ -76,7 +71,7 @@ public class Ecommerce_TestCase_1b_PerfectoReportiumExSmartReportingAPI extends 
             reportiumClient.testStart("Scroll through cart and make a purchase - 4G LTE advanced_average", new TestContext("\"Sanity\", \"Smoke\""));//notify reportiumClient that the test is starting
             reportiumClient.stepStart("This is the pre-steps to start all relevant diagnostics");///define the logical step of the test that includes one or more actual command steps in the automation script but delineate a logical sequence of command steps
             Location.setDeviceLocationByAddress(driver, "2695 Glenvalley Drive, Decatur GA 30032");
-            startNetworkVirtualization(driver,"4g_lte_advanced_average");
+           // startNetworkVirtualization(driver,"4g_lte_advanced_average");
             DeviceVitals.startDeviceVitals(driver, 5);
             DeviceLogs.startDeviceLogs(driver);
             reportiumClient.stepEnd();
@@ -89,7 +84,7 @@ public class Ecommerce_TestCase_1b_PerfectoReportiumExSmartReportingAPI extends 
             driver.findElementByXPath("//android.widget.RadioButton[@text='Female']").click();
             Thread.sleep(500);
             driver.findElementById("android:id/text1").click();
-            Thread.sleep(500);
+            Thread.sleep(1000);
             driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Argentina\"));");
             driver.findElementByXPath("//android.widget.TextView[@text='Argentina']").click();
             driver.findElementById("com.androidsample.generalstore:id/btnLetsShop").click();
@@ -97,10 +92,12 @@ public class Ecommerce_TestCase_1b_PerfectoReportiumExSmartReportingAPI extends 
 
             reportiumClient.stepStart("Scroll through sneakers, and put into cart");
             getAccessibiltyReport(driver);
-            updateNetworkVirtualization(driver, "2g_gprs_poor");
-            Thread.sleep(500);
+            //updateNetworkVirtualization(driver, "2g_gprs_poor");
+            Thread.sleep(1000);
             driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(text(\"com.androidsample.generalstore:id/rvProductList\")).scrollIntoView(new UiSelector().textMatches(\"Jordan 6 Rings\").instance(0))");
             System.out.println("the size is " + driver.findElementsById("com.androidsample.generalstore:id/productName").size());
+            Thread.sleep(1000);
+            Thread.sleep(500);
             int count = driver.findElementsById("com.androidsample.generalstore:id/productName").size();
             System.out.println("This is the count " + count);
             for (int i = 0; i < count; i++) {
@@ -118,7 +115,7 @@ public class Ecommerce_TestCase_1b_PerfectoReportiumExSmartReportingAPI extends 
                 }
 
             }
-            getNetworkSettings(driver);
+            //getNetworkSettings(driver);
             Thread.sleep(500);
             reportiumClient.stepStart("Begin the add to cart");
             driver.findElementById("com.androidsample.generalstore:id/appbar_btn_cart").click();
@@ -135,7 +132,7 @@ public class Ecommerce_TestCase_1b_PerfectoReportiumExSmartReportingAPI extends 
             ex.printStackTrace();
         }
         DeviceVitals.stopDeviceVitals(driver);
-        stopNetworkVirtualization(driver);
+       // stopNetworkVirtualization(driver);
         DeviceLogs.stopDeviceLogs(driver);
         DeviceLogs.getDeviceLogs(driver, 5);
         Thread.sleep(500);

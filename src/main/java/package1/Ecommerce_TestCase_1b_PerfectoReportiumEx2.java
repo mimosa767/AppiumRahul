@@ -9,21 +9,27 @@ import com.perfecto.reportium.test.TestContext;
 import com.perfecto.reportium.test.result.TestResultFactory;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
+import org.apache.commons.lang3.time.StopWatch;
 import org.testng.Assert;
 
 import java.net.MalformedURLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-public class Ecommerce_TestCase_1b_PerfectoReportiumEx extends LocalPerfectoDriverMethodEcommerce {
+public class Ecommerce_TestCase_1b_PerfectoReportiumEx2 extends LocalPerfectoDriverMethodEcommerce {
 
     public static void main (String [] args) throws MalformedURLException, InterruptedException {
 
         AndroidDriver<AndroidElement> driver = LocalPerfectoDriverMethodEcommerce.capabilities();
         Thread.sleep(1000);
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+
         //create a PerfectoExecutionContext instance
-        //The execution context defines metadata for the Execution report. The metadata includes "tags" that can be used to select the execution
+        //The execution context defines metadata for the Execution report. The metadata includes "tags" that can be used to select the exection
         //report from the list of reports
-        //A single execution report may include multiple test reports
+        //A single Execution report may include multiple test reports
         PerfectoExecutionContext perfectoExecutionContext = new PerfectoExecutionContext.PerfectoExecutionContextBuilder()
                 .withProject(new Project("Ecommerce Purchase Scenario", "1"))
                         .withJob( new Job("Purchase Sneaker Checkout Flow", 1))
@@ -89,6 +95,13 @@ public class Ecommerce_TestCase_1b_PerfectoReportiumEx extends LocalPerfectoDriv
             ex.printStackTrace();
         }
         Thread.sleep(500);
+        stopWatch.stop();
+        long timer = stopWatch.getTime();
+        String numberAsString = Long.toString(timer);
+        Map<String, Object> params1 = new HashMap<>();
+        params1.put("name", "stopwatch timer");
+        params1.put("result", numberAsString);
+        driver.executeScript("mobile:status:timer", params1);
         driver.quit();
         String reportURL = reportiumClient.getReportUrl();//the reporting client can supply the URL to the report for retrieval, the report takes time because the different components needs to be compiled
         System.out.println(reportURL);
