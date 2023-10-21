@@ -1,6 +1,5 @@
 package package1;
 
-import com.google.common.graph.Network;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -14,8 +13,6 @@ import com.perfecto.reportium.test.result.TestResultFactory;
 import com.perfecto.utilities.device.DeviceLogs;
 import com.perfecto.utilities.device.DeviceVitals;
 import com.perfecto.utilities.device.Location;
-import com.perfectomobile.selenium.options.rotate.MobileDeviceRotateOperation;
-import com.perfectomobile.selenium.options.rotate.MobileDeviceRotateOptionsUtils;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -31,8 +28,6 @@ import org.testng.Assert;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
@@ -41,7 +36,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-public class Ecommerce_TestCase_1b_PerfectoReportiumExSmartReportingAPI extends LocalPerfectoDriverMethodEcommerce {
+public class Ecommerce_TestCase_1b_PerfectoReportiumExSmartReportingAPITrial extends LocalPerfectoDriverMethodEcommerceTrial {
     //setCustomConditions(driver);
     //Network Virtualization; startNetworkVirtualization(driver, "1");
     // enableAirplaneMode(driver);
@@ -57,7 +52,7 @@ public class Ecommerce_TestCase_1b_PerfectoReportiumExSmartReportingAPI extends 
         final String CQL_SERVER_URL = "https://" + CQL_NAME + ".perfectomobile.com";
         final String OFFLINE_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4YmI4YmZmZS1kMzBjLTQ2MjctYmMxMS0zNTYyMmY1ZDkyMGYifQ.eyJpYXQiOjE2NTc1NjMyODAsImp0aSI6IjZiZTBkMTY0LWEzODMtNGUwZC1iYmJjLWM0YjJiZjBmNTg0YyIsImlzcyI6Imh0dHBzOi8vYXV0aC5wZXJmZWN0b21vYmlsZS5jb20vYXV0aC9yZWFsbXMvZGVtby1wZXJmZWN0b21vYmlsZS1jb20iLCJhdWQiOiJodHRwczovL2F1dGgucGVyZmVjdG9tb2JpbGUuY29tL2F1dGgvcmVhbG1zL2RlbW8tcGVyZmVjdG9tb2JpbGUtY29tIiwic3ViIjoiNjEwM2FhZjktOTdkNC00YjgwLThmZTYtZDNhYmRlNTJhM2JiIiwidHlwIjoiT2ZmbGluZSIsImF6cCI6Im9mZmxpbmUtdG9rZW4tZ2VuZXJhdG9yIiwibm9uY2UiOiIwNGM3YzA2Yi02MTVhLTRhZGUtOGYwZi1jMTUzZDdmYWRiYjYiLCJzZXNzaW9uX3N0YXRlIjoiNjM3ZGQyNTEtNWI3ZS00NTlkLTk5MDgtZDY3ZWZhYmE5YjEzIiwic2NvcGUiOiJvcGVuaWQgb2ZmbGluZV9hY2Nlc3MifQ.guCb3NHpOboo1SGBE93gp2w0uknKl7D6jrCDUmw-YGQ";
         String network = "4g_lte_advanced_average";
-        AndroidDriver<AndroidElement> driver = LocalPerfectoDriverMethodEcommerce.capabilities();
+        AndroidDriver<AndroidElement> driver = LocalPerfectoDriverMethodEcommerceTrial.capabilities();
         Thread.sleep(500);
         //create a PerfectoExecutionContext instanceIphone12promax00008101-000979000291001EwDeviceVitals
         //The execution context defines metadata for the Execution report. The metadata includes "tags" that can be used to select the exection
@@ -143,36 +138,7 @@ public class Ecommerce_TestCase_1b_PerfectoReportiumExSmartReportingAPI extends 
         String reportURL = reportiumClient.getReportUrl();//the reporting client can supply the URL to the report for retrieval, the report takes time because the different components needs to be compiled
         System.out.println(reportURL);
 
-        HttpClient httpClient = HttpClientBuilder.create().build();
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        HttpPost tokenPost = new HttpPost(new URI(CQL_SERVER_URL + "/services/v2.0/auth/access-token"));
-        tokenPost.setEntity(new UrlEncodedFormEntity(Collections.singletonList(new BasicNameValuePair("offline_token", OFFLINE_TOKEN))));
-        System.out.println(tokenPost); //print the request
 
-        HttpResponse tokenResponse = httpClient.execute(tokenPost);
-        JsonObject tokenEntity = gson.fromJson((new InputStreamReader(tokenResponse.getEntity().getContent())), JsonObject.class);
-        String accessToken = tokenEntity.getAsJsonObject("data").get("access_token").getAsString();
-        System.out.println("Got access token:\n" + accessToken);
-
-        URIBuilder uriBuilder = new URIBuilder(REPORTING_SERVER_URL + "/export/api/v1/test-executions");
-
-        // Optional: Filter by range. In this example: retrieve test executions of the past month (result may contain tests of multiple driver executions)
-        uriBuilder.addParameter("startExecutionTime[0]", Long.toString(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(30)));
-        uriBuilder.addParameter("endExecutionTime[0]", Long.toString(System.currentTimeMillis()));
-
-        // Optional: Filter by a specific driver execution ID that you can obtain at script execution
-        // uriBuilder.addParameter("externalId[0]", "SOME_DRIVER_EXECUTION_ID");
-
-        HttpGet getExecutions = new HttpGet(uriBuilder.build());
-        getExecutions.addHeader("TenantID", CQL_NAME);
-        getExecutions.addHeader("Authorization", "Bearer " + accessToken);
-        System.out.println(getExecutions);
-
-        HttpResponse getExecutionsResp = httpClient.execute(getExecutions);
-        System.out.println(getExecutionsResp);
-
-        JsonObject executionEntity = gson.fromJson(new InputStreamReader(getExecutionsResp.getEntity().getContent()), JsonObject.class);
-        System.out.println("List of test executions response \n" + gson.toJson(executionEntity));
     }
 
     // To start network virtualization

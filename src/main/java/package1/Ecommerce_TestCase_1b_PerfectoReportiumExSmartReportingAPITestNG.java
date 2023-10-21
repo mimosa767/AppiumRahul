@@ -1,6 +1,5 @@
 package package1;
 
-import com.google.common.graph.Network;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -14,11 +13,10 @@ import com.perfecto.reportium.test.result.TestResultFactory;
 import com.perfecto.utilities.device.DeviceLogs;
 import com.perfecto.utilities.device.DeviceVitals;
 import com.perfecto.utilities.device.Location;
-import com.perfectomobile.selenium.options.rotate.MobileDeviceRotateOperation;
-import com.perfectomobile.selenium.options.rotate.MobileDeviceRotateOptionsUtils;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.remote.MobileCapabilityType;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -27,7 +25,13 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
+import org.testng.ITestContext;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -35,41 +39,75 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-public class Ecommerce_TestCase_1b_PerfectoReportiumExSmartReportingAPI extends LocalPerfectoDriverMethodEcommerce {
+public class Ecommerce_TestCase_1b_PerfectoReportiumExSmartReportingAPITestNG {
     //setCustomConditions(driver);
     //Network Virtualization; startNetworkVirtualization(driver, "1");
     // enableAirplaneMode(driver);
     //  disableWifi(driver);
-    public static void main (String [] args) throws IOException, InterruptedException, URISyntaxException {
+    private String app;
+    private String behavior;
+    private String platformVersion;
+    private String platformName;
+    private String manufacturer;
+    private String model;
+    private String securityToken;
+    public AndroidDriver<AndroidElement> driver;
 
+    @Test
+    @Parameters({"app", "behavior", "platformVersion", "platformName", "manufacturer", "model", "securityToken" })
+    public static void capabilities(String app, String behavior, String platformVersion, String platformName, String manufacturer, String model, String securityToken) throws IOException, URISyntaxException, InterruptedException {
+        app = app;
+        behavior = behavior;
+        platformVersion = platformVersion;
+       platformName = platformName;
+        manufacturer = manufacturer;
+        model = model;
+        securityToken = securityToken;
+        System.out.println(app + behavior + platformName+ platformVersion + manufacturer + model + securityToken);
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("app", app);
+        capabilities.setCapability("enableAppiumBehavior", behavior);
+        capabilities.setCapability("platformVersion", platformVersion);
+        capabilities.setCapability("platformName", platformName);
+        capabilities.setCapability("manufacturer", manufacturer);
+        capabilities.setCapability("model", model);
+        capabilities.setCapability("securityToken", securityToken);
+        capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 14);
+        capabilities.setCapability("takeScreenshot", true);
+        //        capabilities.setCapability("useVirtualDevice", true);
+        String executionId = (String) capabilities.getCapability("executionID");
+        AndroidDriver<AndroidElement> driver = new AndroidDriver<AndroidElement>(new URL("https://demo.perfectomobile.com/nexperience/perfectomobile/wd/hub/"), capabilities);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//    public void perfectoTest (String [] args) throws IOException, InterruptedException, URISyntaxException {
         final String PERFECTO_SECURITY_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4YmI4YmZmZS1kMzBjLTQ2MjctYmMxMS0zNTYyMmY1ZDkyMGYifQ.eyJpYXQiOjE2NTc1NjMyODAsImp0aSI6IjZiZTBkMTY0LWEzODMtNGUwZC1iYmJjLWM0YjJiZjBmNTg0YyIsImlzcyI6Imh0dHBzOi8vYXV0aC5wZXJmZWN0b21vYmlsZS5jb20vYXV0aC9yZWFsbXMvZGVtby1wZXJmZWN0b21vYmlsZS1jb20iLCJhdWQiOiJodHRwczovL2F1dGgucGVyZmVjdG9tb2JpbGUuY29tL2F1dGgvcmVhbG1zL2RlbW8tcGVyZmVjdG9tb2JpbGUtY29tIiwic3ViIjoiNjEwM2FhZjktOTdkNC00YjgwLThmZTYtZDNhYmRlNTJhM2JiIiwidHlwIjoiT2ZmbGluZSIsImF6cCI6Im9mZmxpbmUtdG9rZW4tZ2VuZXJhdG9yIiwibm9uY2UiOiIwNGM3YzA2Yi02MTVhLTRhZGUtOGYwZi1jMTUzZDdmYWRiYjYiLCJzZXNzaW9uX3N0YXRlIjoiNjM3ZGQyNTEtNWI3ZS00NTlkLTk5MDgtZDY3ZWZhYmE5YjEzIiwic2NvcGUiOiJvcGVuaWQgb2ZmbGluZV9hY2Nlc3MifQ.guCb3NHpOboo1SGBE93gp2w0uknKl7D6jrCDUmw-YGQ"; // TODO put your security token here
         final String SECURITY_TOKEN = System.getProperty("security-token", PERFECTO_SECURITY_TOKEN);
-
-        // The Perfecto Continuous Quality Lab you work with
+//
+//        // The Perfecto Continuous Quality Lab you work with
         final String CQL_NAME = System.getProperty("CQL_NAME", "demo"); // TODO put your Continuous Quality Lab name here
         final String REPORTING_SERVER_URL = "https://" + CQL_NAME + ".reporting-01.perfectomobile.com";
         final String CQL_SERVER_URL = "https://" + CQL_NAME + ".perfectomobile.com";
         final String OFFLINE_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4YmI4YmZmZS1kMzBjLTQ2MjctYmMxMS0zNTYyMmY1ZDkyMGYifQ.eyJpYXQiOjE2NTc1NjMyODAsImp0aSI6IjZiZTBkMTY0LWEzODMtNGUwZC1iYmJjLWM0YjJiZjBmNTg0YyIsImlzcyI6Imh0dHBzOi8vYXV0aC5wZXJmZWN0b21vYmlsZS5jb20vYXV0aC9yZWFsbXMvZGVtby1wZXJmZWN0b21vYmlsZS1jb20iLCJhdWQiOiJodHRwczovL2F1dGgucGVyZmVjdG9tb2JpbGUuY29tL2F1dGgvcmVhbG1zL2RlbW8tcGVyZmVjdG9tb2JpbGUtY29tIiwic3ViIjoiNjEwM2FhZjktOTdkNC00YjgwLThmZTYtZDNhYmRlNTJhM2JiIiwidHlwIjoiT2ZmbGluZSIsImF6cCI6Im9mZmxpbmUtdG9rZW4tZ2VuZXJhdG9yIiwibm9uY2UiOiIwNGM3YzA2Yi02MTVhLTRhZGUtOGYwZi1jMTUzZDdmYWRiYjYiLCJzZXNzaW9uX3N0YXRlIjoiNjM3ZGQyNTEtNWI3ZS00NTlkLTk5MDgtZDY3ZWZhYmE5YjEzIiwic2NvcGUiOiJvcGVuaWQgb2ZmbGluZV9hY2Nlc3MifQ.guCb3NHpOboo1SGBE93gp2w0uknKl7D6jrCDUmw-YGQ";
         String network = "4g_lte_advanced_average";
-        AndroidDriver<AndroidElement> driver = LocalPerfectoDriverMethodEcommerce.capabilities();
+
         Thread.sleep(500);
-        //create a PerfectoExecutionContext instanceIphone12promax00008101-000979000291001EwDeviceVitals
-        //The execution context defines metadata for the Execution report. The metadata includes "tags" that can be used to select the exection
-        //report from the list of reports
-        //A single Execution report may include multiple test reports
+//        //create a PerfectoExecutionContext instanceIphone12promax00008101-000979000291001EwDeviceVitals
+//        //The execution context defines metadata for the Execution report. The metadata includes "tags" that can be used to select the exection
+//        //report from the list of reports
+//        //A single Execution report may include multiple test reports
         PerfectoExecutionContext perfectoExecutionContext = new PerfectoExecutionContext.PerfectoExecutionContextBuilder()
                 .withProject(new Project("Ecommerce Purchase Scenario", "3"))
                         .withJob( new Job("Purchase Sneaker Checkout Flow", 1))
                                 .withContextTags("Sanity", "Penn", "Ecommerce Purchase Feature", "Regression", "Smoke", "Android", "2.0", "Shop")
                                         .withWebDriver(driver)
                                                 .build();
-        //The ReportiumClient monitors the application and transfers the report information and artifacts to the Reporting storage server
+//        //The ReportiumClient monitors the application and transfers the report information and artifacts to the Reporting storage server
         ReportiumClient reportiumClient = new ReportiumClientFactory().createPerfectoReportiumClient(perfectoExecutionContext);
         try {
             Thread.sleep(500);
@@ -138,7 +176,11 @@ public class Ecommerce_TestCase_1b_PerfectoReportiumExSmartReportingAPI extends 
         stopNetworkVirtualization(driver);
         DeviceLogs.stopDeviceLogs(driver);
         DeviceLogs.getDeviceLogs(driver, 5);
-        Thread.sleep(500);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         driver.quit();
         String reportURL = reportiumClient.getReportUrl();//the reporting client can supply the URL to the report for retrieval, the report takes time because the different components needs to be compiled
         System.out.println(reportURL);
